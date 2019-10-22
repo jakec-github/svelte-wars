@@ -4,7 +4,7 @@
   import CharacterStack from "./CharacterStack.svelte";
 
   export let characters;
-  export let activePlayer = false;
+  export let active = false;
 </script>
 
 <style>
@@ -22,7 +22,7 @@
 
 <aside>
   <div class="your-turn-wrapper">
-    <YourTurn />
+    <YourTurn {active} />
   </div>
 
   <CharacterStack {characters} />

@@ -1,3 +1,7 @@
+<script>
+  export let active = false;
+</script>
+
 <style>
   div {
     display: inline-block;
@@ -6,8 +10,18 @@
     border-radius: 5px;
     font-family: "body";
   }
+
+  .inactive {
+    opacity: 0.1;
+  }
 </style>
 
-<div>
-  <p>Your turn</p>
-</div>
+{#if active}
+  <div>
+    <p>Your turn</p>
+  </div>
+{:else}
+  <div class="inactive">
+    <p>Your turn</p>
+  </div>
+{/if}

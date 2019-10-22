@@ -3,9 +3,9 @@
 
   import PlayerZone from "./components/molecules/PlayerZone.svelte";
   import Button from "./components/Button.svelte";
+  import ChooseStat from "./components/templates/ChooseStat.svelte";
+  import ChooseCharacter from "./components/templates/ChooseCharacter.svelte";
   import { getRandomPositiveInt } from "./utils";
-
-  console.log(Button);
 
   const DECK_SIZE = 5;
   const TOTAL_CHARACTERS = 87;
@@ -17,12 +17,22 @@
   $: player1Characters = characters.slice(0, DECK_SIZE);
   $: player2Characters = characters.slice(DECK_SIZE);
 
-  let currentPlayer = getRandomPositiveInt(2);
-  let stage = STAGES[0];
-  let turns = 0;
+  let startingPlayer = getRandomPositiveInt(2);
+  let stage = STAGES[1];
+  let round = 1;
+  let activePlayer;
+
+  $: {
+    if (stage === STAGES[2] || stage === STAGES[4]) {
+      activePlayer = null;
+    } else if ((startingPlayer + round) % 2) {
+      activePlayer = stage === STAGES[0] ? "player2" : "player1";
+    } else {
+      activePlayer = stage === STAGES[0] ? "player1" : "player2";
+    }
+  }
 
   onMount(async () => {
-    // Can result in duplicate characters
     let characterIds = [];
 
     for (let i = 0; i < DECK_SIZE * 2; i += 1) {
@@ -76,16 +86,20 @@
 
 <div class="wrapper">
   <main>
-    <PlayerZone characters={player1Characters} />
+    <PlayerZone
+      characters={player1Characters}
+      active={activePlayer === 'player1'} />
     {#if stage === STAGES[0]}
-      <div class="game" />
+      <ChooseStat {activePlayer} chosenCharacter={player1Characters[0]} />
     {:else if stage === STAGES[1]}
-      <div class="game" />
+      <ChooseCharacter player1Character={player1Characters[0]} />
     {:else if stage === STAGES[2]}
       <div class="game" />
     {:else if stage === STAGES[3]}
       <div class="game" />
     {/if}
-    <PlayerZone characters={player2Characters} />
+    <PlayerZone
+      characters={player2Characters}
+      active={activePlayer === 'player2'} />
   </main>
 </div>

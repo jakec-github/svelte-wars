@@ -1,3 +1,9 @@
+<script>
+  export let showPrompt = false;
+
+  $: text = showPrompt ? "Choose your contender!" : "?";
+</script>
+
 <style>
   div {
     display: inline-block;
@@ -19,9 +25,10 @@
     color: white;
     text-align: center;
     font-size: 18px;
+    font-family: "body";
   }
 </style>
 
 <div>
-  <span>Choose your contender!</span>
+  <span>{text}</span>
 </div>
