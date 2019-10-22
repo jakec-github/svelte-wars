@@ -9,7 +9,7 @@
 
 <style>
   div {
-    margin-top: 220px;
+    margin-top: 40px;
     display: flex;
     align-items: center;
   }
@@ -17,6 +17,7 @@
   p {
     margin: 15px;
     font-family: "body";
+    color: white;
   }
 </style>
 

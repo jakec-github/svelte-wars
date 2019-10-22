@@ -6,7 +6,7 @@
 
 <style>
   p {
-    margin-top: 220px;
+    margin-top: 40px;
     font-size: 25px;
     font-family: "body";
   }

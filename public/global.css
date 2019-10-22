@@ -1,11 +1,11 @@
 @font-face {
   font-family: title;
-  src: url(fonts/StarJediOutline.ttf);
+  src: url(static/fonts/death_star.ttf);
 }
 
 @font-face {
   font-family: body;
-  src: url(fonts/moonhouse.ttf);
+  src: url(static/fonts/moonhouse.ttf);
 }
 
 html,
@@ -21,6 +21,7 @@ body {
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  background-image: url(static/img/stars.jpg);
 }
 
 a {

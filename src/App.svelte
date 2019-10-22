@@ -83,9 +83,16 @@
     width: 1000px;
   }
 
-  .game {
-    border: 3px solid orangered;
-    flex-grow: 1;
+  .main-wrapper {
+    text-align: center;
+  }
+
+  p {
+    color: #f8dc01;
+    font-size: 90px;
+    font-family: "title";
+    line-height: 66px;
+    margin-top: 40px;
   }
 </style>
 
@@ -95,20 +102,28 @@
       characters={player1Characters}
       active={activePlayer === 'player1'}
       hide={stage === STAGES[3]} />
-    {#if stage === STAGES[0]}
-      <ChooseStat {activePlayer} chosenCharacter={player1Characters[0]} />
-    {:else if stage === STAGES[1]}
-      <ChooseCharacter player1Character={player1Characters[0]} />
-    {:else if stage === STAGES[2]}
-      <SeeScore
-        player1Character={player1Characters[0]}
-        player2Character={player2Characters[0]}
-        player1Score={5}
-        player2Score={8}
-        topScore={15} />
-    {:else if stage === STAGES[3]}
-      <GameOver winner="player1" />
-    {/if}
+    <div class="main-wrapper">
+      <p>
+        SVELTE
+        <br />
+        WARS
+      </p>
+      {#if stage === STAGES[0]}
+        <ChooseStat {activePlayer} chosenCharacter={player1Characters[0]} />
+      {:else if stage === STAGES[1]}
+        <ChooseCharacter player1Character={player1Characters[0]} />
+      {:else if stage === STAGES[2]}
+        <SeeScore
+          player1Character={player1Characters[0]}
+          player2Character={player2Characters[0]}
+          player1Score={5}
+          player2Score={8}
+          topScore={15} />
+      {:else if stage === STAGES[3]}
+        <GameOver winner="player1" />
+      {/if}
+    </div>
+
     <PlayerZone
       characters={player2Characters}
       active={activePlayer === 'player2'}

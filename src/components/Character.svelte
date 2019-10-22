@@ -7,26 +7,28 @@
 <style>
   div {
     display: inline-block;
-    border: 2px solid black;
+    border: 2px solid #20aeba;
     border-radius: 5px;
-    background-color: gray;
+    background-color: black;
     max-width: 150px;
     overflow: hidden;
     height: 220px;
+    text-align: center;
+  }
+
+  p {
+    display: block;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    font-family: "body";
+    max-width: 140px;
+    margin: auto;
   }
 
   img {
     width: 150px;
     border-top: 1px solid black;
-  }
-
-  p {
-    display: block;
-    width: 150px;
-    color: white;
-    text-align: center;
-    font-size: 18px;
-    font-family: "body";
   }
 </style>
 

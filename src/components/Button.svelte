@@ -8,10 +8,9 @@
     appearance: none;
     -webkit-appearance: none;
     padding: 5px 15px;
-    border: 2px solid black;
     border-radius: 5px;
-    background-color: gray;
-    color: white;
+    background-color: white;
+    color: black;
     text-transform: uppercase;
     font-size: 18px;
     font-family: "body";
@@ -20,6 +19,14 @@
 
   button:hover {
     cursor: pointer;
+    background-color: #f8dc01;
+
+    color: white;
+  }
+
+  button:active {
+    background-color: #20aeba;
+    color: white;
   }
 </style>
 

@@ -6,13 +6,14 @@
   div {
     display: inline-block;
     padding: 10px;
-    border: 2px solid black;
+    border: 2px solid #20aeba;
     border-radius: 5px;
     font-family: "body";
+    color: #20aeba;
   }
 
   .inactive {
-    opacity: 0.1;
+    opacity: 0.2;
   }
 </style>
 
