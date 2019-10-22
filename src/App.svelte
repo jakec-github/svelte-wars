@@ -1,10 +1,15 @@
 <script>
   import { onMount } from "svelte";
 
-  import PlayerZone from "./components/molecules/PlayerZone.svelte";
   import Button from "./components/Button.svelte";
+
+  import PlayerZone from "./components/molecules/PlayerZone.svelte";
+
   import ChooseStat from "./components/templates/ChooseStat.svelte";
   import ChooseCharacter from "./components/templates/ChooseCharacter.svelte";
+  import SeeScore from "./components/templates/SeeScore.svelte";
+  import GameOver from "./components/templates/GameOver.svelte";
+
   import { getRandomPositiveInt } from "./utils";
 
   const DECK_SIZE = 5;
@@ -18,7 +23,7 @@
   $: player2Characters = characters.slice(DECK_SIZE);
 
   let startingPlayer = getRandomPositiveInt(2);
-  let stage = STAGES[1];
+  let stage = STAGES[0];
   let round = 1;
   let activePlayer;
 
@@ -88,18 +93,25 @@
   <main>
     <PlayerZone
       characters={player1Characters}
-      active={activePlayer === 'player1'} />
+      active={activePlayer === 'player1'}
+      hide={stage === STAGES[3]} />
     {#if stage === STAGES[0]}
       <ChooseStat {activePlayer} chosenCharacter={player1Characters[0]} />
     {:else if stage === STAGES[1]}
       <ChooseCharacter player1Character={player1Characters[0]} />
     {:else if stage === STAGES[2]}
-      <div class="game" />
+      <SeeScore
+        player1Character={player1Characters[0]}
+        player2Character={player2Characters[0]}
+        player1Score={5}
+        player2Score={8}
+        topScore={15} />
     {:else if stage === STAGES[3]}
-      <div class="game" />
+      <GameOver winner="player1" />
     {/if}
     <PlayerZone
       characters={player2Characters}
-      active={activePlayer === 'player2'} />
+      active={activePlayer === 'player2'}
+      hide={stage === STAGES[3]} />
   </main>
 </div>

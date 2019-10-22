@@ -5,6 +5,7 @@
 
   export let characters;
   export let active = false;
+  export let hide = false;
 </script>
 
 <style>
@@ -18,9 +19,13 @@
   .your-turn-wrapper {
     margin: 15px;
   }
+
+  .hidden {
+    opacity: 0;
+  }
 </style>
 
-<aside>
+<aside class:hidden={hide === true}>
   <div class="your-turn-wrapper">
     <YourTurn {active} />
   </div>
