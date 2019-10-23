@@ -2,6 +2,10 @@
   import Character from "../Character.svelte";
 
   export let characters = [];
+  export let handleCharacterClick;
+  export let player;
+
+  $: console.log(player);
 </script>
 
 <style>
@@ -11,6 +15,10 @@
     align-items: center;
   }
 
+  article:hover {
+    cursor: pointer;
+  }
+
   article:not(:last-child) {
     margin-bottom: 5px;
   }
@@ -18,8 +26,11 @@
 
 <div>
   <div />
-  {#each characters as { name, src } (name)}
-    <article>
+  {#each characters as { name, src }, i (name)}
+    <article
+      on:click={handleCharacterClick}
+      data-index={i}
+      data-player={player}>
       <Character {name} {src} />
     </article>
   {/each}

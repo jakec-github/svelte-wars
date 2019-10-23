@@ -3,9 +3,11 @@
 
   import CharacterStack from "./CharacterStack.svelte";
 
+  export let player;
   export let characters;
   export let active = false;
   export let hide = false;
+  export let handleCharacterClick;
 </script>
 
 <style>
@@ -30,6 +32,6 @@
     <YourTurn {active} />
   </div>
 
-  <CharacterStack {characters} />
+  <CharacterStack {characters} {handleCharacterClick} {player} />
 
 </aside>
