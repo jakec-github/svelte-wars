@@ -1,7 +1,8 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   import Arena from "../molecules/Arena.svelte";
   import StatMenu from "../molecules/StatMenu.svelte";
-  import { createEventDispatcher } from "svelte";
 
   const dispatch = createEventDispatcher();
 

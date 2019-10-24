@@ -4,6 +4,7 @@
 
   export let player1Character = null;
   export let player2Character = null;
+  export let handleClick;
 </script>
 
 <style>
@@ -16,6 +17,10 @@
 <div>
   <Arena {player1Character} {player2Character} />
   <div class="button-wrapper">
-    <Button>OK</Button>
+    <Button
+      onClick={handleClick}
+      disabled={!(player1Character && player2Character)}>
+      OK
+    </Button>
   </div>
 </div>

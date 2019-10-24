@@ -10,9 +10,13 @@
   import SeeScore from "./components/templates/SeeScore.svelte";
   import GameOver from "./components/templates/GameOver.svelte";
 
-  import { getRandomPositiveInt, updateCharacters } from "./utils";
+  import {
+    getCharacterData,
+    getRandomPositiveInt,
+    updateCharacters
+  } from "./utils";
 
-  const DECK_SIZE = 5;
+  const DECK_SIZE = 2;
   const TOTAL_CHARACTERS = 87;
 
   // Probably should refactor this out of an array
@@ -23,12 +27,12 @@
   let round = 1;
   let activePlayer;
 
-  let characters = [];
   let player1Characters;
   let player2Characters;
   let player1Character;
   let player2Character;
   let statChoice;
+  let winner;
 
   $: {
     if (stage === STAGES[2] || stage === STAGES[4]) {
@@ -40,30 +44,35 @@
     }
   }
 
-  $: {
+  $: if (player1Characters && player2Characters) {
+    // May need to stop this running on mount
     if (stage === STAGES[0]) {
       if (activePlayer === "player1") {
-        const randomCharacter = getRandomPositiveInt(DECK_SIZE) - 1;
-        player1Character = characters[randomCharacter];
+        const randomCharacter =
+          getRandomPositiveInt(player1Characters.length) - 1;
+        player1Character = player1Characters[randomCharacter];
         player1Characters = [
-          ...characters.slice(0, randomCharacter),
-          ...characters.slice(randomCharacter + 1, DECK_SIZE)
+          ...player1Characters.slice(0, randomCharacter),
+          ...player1Characters.slice(
+            randomCharacter + 1,
+            player1Characters.length
+          )
         ];
-
-        player2Characters = characters.slice(DECK_SIZE);
       } else {
-        const randomCharacter = getRandomPositiveInt(DECK_SIZE) - 1 + DECK_SIZE;
-        player2Character = characters[randomCharacter];
+        const randomCharacter =
+          getRandomPositiveInt(player2Characters.length) - 1;
+        player2Character = player2Characters[randomCharacter];
         player2Characters = [
-          ...characters.slice(DECK_SIZE, randomCharacter),
-          ...characters.slice(randomCharacter + 1, DECK_SIZE * 2)
+          ...player2Characters.slice(0, randomCharacter),
+          ...player2Characters.slice(
+            randomCharacter + 1,
+            player2Characters.length
+          )
         ];
-
-        player1Characters = characters.slice(0, DECK_SIZE);
       }
     }
   }
-
+  // OOOOOOOOOOOOOOOOOOOOOOOO
   onMount(async () => {
     let characterIds = [];
 
@@ -77,20 +86,16 @@
       }
     }
 
-    characters = await Promise.all(
+    const characters = await Promise.all(
       characterIds.map(id => {
-        return fetch(`https://swapi.co/api/people/${id}/`).then(
-          async result => {
-            const { name, films } = await result.json();
-            return {
-              name,
-              films,
-              src: `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`
-            };
-          }
+        return fetch(`https://swapi.co/api/people/${id}/`).then(result =>
+          getCharacterData(result, id)
         );
       })
     );
+
+    player1Characters = characters.slice(0, DECK_SIZE);
+    player2Characters = characters.slice(DECK_SIZE);
   });
 
   const handleStatChoice = ({ detail }) => {
@@ -124,6 +129,39 @@
         player2Characters = newCharacterStack;
       }
     }
+  };
+
+  const handleConfirmClick = () => {
+    stage = STAGES[2];
+  };
+
+  const handleScoreClick = ({ detail }) => {
+    if (detail.roundWinner === "player1") {
+      player1Characters = [
+        ...player1Characters,
+        player1Character,
+        player2Character
+      ];
+    } else {
+      player2Characters = [
+        ...player2Characters,
+        player1Character,
+        player2Character
+      ];
+    }
+    player1Character = null;
+    player2Character = null;
+
+    if (!player1Characters.length) {
+      winner = "player2";
+      stage = STAGES[3];
+    } else if (!player2Characters.length) {
+      winner = "player1";
+      stage = STAGES[3];
+    } else {
+      stage = STAGES[0];
+    }
+    console.log(winner);
   };
 </script>
 
@@ -177,16 +215,18 @@
           chosenCharacter={activePlayer === 'player1' ? player1Character : player2Character}
           on:choice={handleStatChoice} />
       {:else if stage === STAGES[1]}
-        <ChooseCharacter {player1Character} {player2Character} />
+        <ChooseCharacter
+          {player1Character}
+          {player2Character}
+          handleClick={handleConfirmClick} />
       {:else if stage === STAGES[2]}
         <SeeScore
-          player1Character={player1Characters[0]}
-          player2Character={player2Characters[0]}
-          player1Score={5}
-          player2Score={8}
-          topScore={15} />
+          {player1Character}
+          {player2Character}
+          {statChoice}
+          on:click={handleScoreClick} />
       {:else if stage === STAGES[3]}
-        <GameOver winner="player1" />
+        <GameOver {winner} />
       {/if}
     </div>
 

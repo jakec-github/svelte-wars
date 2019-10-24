@@ -652,22 +652,12 @@ const apiBackup = [
     url: 'https://swapi.co/api/people/31/',
   },
 ];
-// const getCharacter = id => {
-//   return new Promise(res => {
-//     res(JSON.stringify(apiBackup[0]));
-//   });
-// };
-
-const getCharacter = id => {
-  return apiBackup[id - 1];
-};
 
 window.fetch = url => {
   return new Promise(res => {
     res({
       json: () =>
-        new Promise(res => res(getCharacter(Number(url.replace(/\D/g, ''))))),
+        new Promise(res => res(apiBackup[Number(url.replace(/\D/g, '')) - 1])),
     });
-    // res({ json: () => getCharacter(Number(url.replace(/\D/g, ''))) });
   });
 };
