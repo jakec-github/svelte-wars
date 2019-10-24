@@ -13,19 +13,25 @@ export const getCharacterData = async (result, id) => {
   };
 };
 
-export const updateCharacters = (liveCharacter, characterStack, i) => {
-  let newCharacterStack = [
-    ...characterStack.slice(0, i),
-    ...characterStack.slice(i + 1),
+export const updateCharacters = (
+  liveCharacter,
+  characterDeck,
+  index = null,
+) => {
+  const i = index || getRandomPositiveInt(characterDeck.length);
+
+  let newCharacterDeck = [
+    ...characterDeck.slice(0, i),
+    ...characterDeck.slice(i + 1),
   ];
 
   if (liveCharacter) {
-    newCharacterStack = [...newCharacterStack, liveCharacter];
+    newCharacterDeck = [...newCharacterDeck, liveCharacter];
   }
 
   return {
-    newCharacterStack,
-    newLiveCharacter: characterStack[i],
+    newCharacterDeck,
+    newLiveCharacter: characterDeck[i],
   };
 };
 

@@ -1,9 +1,9 @@
 <script>
-  import Character from "../Character.svelte";
-  import CharacterPrompt from "../CharacterPrompt.svelte";
+  import Character from "../atoms/Character.svelte";
+  import CharacterPrompt from "../atoms/CharacterPrompt.svelte";
 
-  export let player1Character = null;
-  export let player2Character = null;
+  export let player1Choice = null;
+  export let player2Choice = null;
   export let showPrompt = false;
 </script>
 
@@ -22,14 +22,14 @@
 </style>
 
 <div>
-  {#if player1Character}
-    <Character {...player1Character} />
+  {#if player1Choice}
+    <Character {...player1Choice} />
   {:else}
     <CharacterPrompt {showPrompt} />
   {/if}
   <p>VS</p>
-  {#if player2Character}
-    <Character {...player2Character} />
+  {#if player2Choice}
+    <Character {...player2Choice} />
   {:else}
     <CharacterPrompt {showPrompt} />
   {/if}

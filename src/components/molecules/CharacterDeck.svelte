@@ -1,11 +1,9 @@
 <script>
-  import Character from "../Character.svelte";
+  import Character from "../atoms/Character.svelte";
 
   export let characters = [];
   export let handleCharacterClick;
   export let player;
-
-  $: console.log(player);
 </script>
 
 <style>

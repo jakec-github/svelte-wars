@@ -1,7 +1,7 @@
 <script>
-  import YourTurn from "../YourTurn.svelte";
+  import YourTurn from "../atoms/YourTurn.svelte";
 
-  import CharacterStack from "./CharacterStack.svelte";
+  import CharacterDeck from "./CharacterDeck.svelte";
 
   export let player;
   export let characters;
@@ -32,6 +32,6 @@
     <YourTurn {active} />
   </div>
 
-  <CharacterStack {characters} {handleCharacterClick} {player} />
+  <CharacterDeck {characters} {handleCharacterClick} {player} />
 
 </aside>

@@ -1,7 +1,9 @@
 <script>
+  import { PLAYER_1 } from "../../const";
+
   export let winner;
 
-  let text = winner === "player1" ? "Player 1" : "Player 2";
+  let text = winner === PLAYER_1 ? "Player 1" : "Player 2";
 </script>
 
 <style>

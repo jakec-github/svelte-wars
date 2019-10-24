@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
 
-  import Button from "./components/Button.svelte";
+  import Button from "./components/atoms/Button.svelte";
 
   import PlayerZone from "./components/molecules/PlayerZone.svelte";
 
@@ -11,68 +11,69 @@
   import GameOver from "./components/templates/GameOver.svelte";
 
   import {
+    DECK_SIZE,
+    TOTAL_CHARACTERS,
+    CHOOSE_STAT,
+    CHOOSE_CHARACTER,
+    SEE_SCORE,
+    GAME_OVER,
+    PLAYER_1,
+    PLAYER_2
+  } from "./const";
+
+  import {
     getCharacterData,
     getRandomPositiveInt,
     updateCharacters
   } from "./utils";
 
-  const DECK_SIZE = 2;
-  const TOTAL_CHARACTERS = 87;
-
-  // Probably should refactor this out of an array
-  const STAGES = ["CHOOSE STAT", "CHOOSE CHARACTER", "SEE SCORE", "GAME OVER"];
-
+  // Game state
   let startingPlayer = getRandomPositiveInt(2);
-  let stage = STAGES[0];
+  let stage = CHOOSE_STAT;
   let round = 1;
   let activePlayer;
-
-  let player1Characters;
-  let player2Characters;
-  let player1Character;
-  let player2Character;
   let statChoice;
   let winner;
 
+  // Player state
+  let player1Deck;
+  let player2Deck;
+  let player1Choice;
+  let player2Choice;
+
   $: {
-    if (stage === STAGES[2] || stage === STAGES[4]) {
+    if (stage === SEE_SCORE) {
       activePlayer = null;
     } else if ((startingPlayer + round) % 2) {
-      activePlayer = stage === STAGES[0] ? "player2" : "player1";
+      activePlayer = stage === CHOOSE_STAT ? PLAYER_2 : PLAYER_1;
     } else {
-      activePlayer = stage === STAGES[0] ? "player1" : "player2";
+      activePlayer = stage === CHOOSE_STAT ? PLAYER_1 : PLAYER_2;
     }
   }
 
-  $: if (player1Characters && player2Characters) {
-    // May need to stop this running on mount
-    if (stage === STAGES[0]) {
-      if (activePlayer === "player1") {
-        const randomCharacter =
-          getRandomPositiveInt(player1Characters.length) - 1;
-        player1Character = player1Characters[randomCharacter];
-        player1Characters = [
-          ...player1Characters.slice(0, randomCharacter),
-          ...player1Characters.slice(
-            randomCharacter + 1,
-            player1Characters.length
-          )
-        ];
+  $: if (player1Deck && player2Deck) {
+    if (stage === CHOOSE_STAT) {
+      if (activePlayer === PLAYER_1) {
+        const { newCharacterDeck, newLiveCharacter } = updateCharacters(
+          player1Choice,
+          player1Deck,
+          i
+        );
+        player1Choice = newLiveCharacter;
+        player1Deck = newCharacterDeck;
       } else {
-        const randomCharacter =
-          getRandomPositiveInt(player2Characters.length) - 1;
-        player2Character = player2Characters[randomCharacter];
-        player2Characters = [
-          ...player2Characters.slice(0, randomCharacter),
-          ...player2Characters.slice(
-            randomCharacter + 1,
-            player2Characters.length
-          )
-        ];
+        const { newCharacterDeck, newLiveCharacter } = updateCharacters(
+          player2Choice,
+          player2Deck,
+          i
+        );
+        player2Choice = newLiveCharacter;
+        player2Deck = newCharacterDeck;
       }
     }
   }
-  // OOOOOOOOOOOOOOOOOOOOOOOO
+
+  // Lifecycle
   onMount(async () => {
     let characterIds = [];
 
@@ -94,12 +95,13 @@
       })
     );
 
-    player1Characters = characters.slice(0, DECK_SIZE);
-    player2Characters = characters.slice(DECK_SIZE);
+    player1Deck = characters.slice(0, DECK_SIZE);
+    player2Deck = characters.slice(DECK_SIZE);
   });
 
+  // Event handlers
   const handleStatChoice = ({ detail }) => {
-    stage = STAGES[1];
+    stage = CHOOSE_CHARACTER;
     statChoice = detail.choice;
   };
 
@@ -110,58 +112,50 @@
   }) => {
     const i = Number(index);
 
-    if (player === activePlayer && stage === STAGES[1]) {
-      if (activePlayer === "player1") {
-        const { newCharacterStack, newLiveCharacter } = updateCharacters(
-          player1Character,
-          player1Characters,
+    if (player === activePlayer && stage === CHOOSE_CHARACTER) {
+      if (activePlayer === PLAYER_1) {
+        const { newCharacterDeck, newLiveCharacter } = updateCharacters(
+          player1Choice,
+          player1Deck,
           i
         );
-        player1Character = newLiveCharacter;
-        player1Characters = newCharacterStack;
+        player1Choice = newLiveCharacter;
+        player1Deck = newCharacterDeck;
       } else {
-        const { newCharacterStack, newLiveCharacter } = updateCharacters(
-          player2Character,
-          player2Characters,
+        const { newCharacterDeck, newLiveCharacter } = updateCharacters(
+          player2Choice,
+          player2Deck,
           i
         );
-        player2Character = newLiveCharacter;
-        player2Characters = newCharacterStack;
+        player2Choice = newLiveCharacter;
+        player2Deck = newCharacterDeck;
       }
     }
   };
 
   const handleConfirmClick = () => {
-    stage = STAGES[2];
+    stage = SEE_SCORE;
   };
 
   const handleScoreClick = ({ detail }) => {
-    if (detail.roundWinner === "player1") {
-      player1Characters = [
-        ...player1Characters,
-        player1Character,
-        player2Character
-      ];
+    if (detail.roundWinner === PLAYER_1) {
+      player1Deck = [...player1Deck, player1Choice, player2Choice];
     } else {
-      player2Characters = [
-        ...player2Characters,
-        player1Character,
-        player2Character
-      ];
+      player2Deck = [...player2Deck, player1Choice, player2Choice];
     }
-    player1Character = null;
-    player2Character = null;
+    player1Choice = null;
+    player2Choice = null;
 
-    if (!player1Characters.length) {
-      winner = "player2";
-      stage = STAGES[3];
-    } else if (!player2Characters.length) {
-      winner = "player1";
-      stage = STAGES[3];
+    if (!player1Deck.length) {
+      winner = PLAYER_2;
+      stage = GAME_OVER;
+    } else if (!player2Deck.length) {
+      winner = PLAYER_1;
+      stage = GAME_OVER;
     } else {
-      stage = STAGES[0];
+      round += 1;
+      stage = CHOOSE_STAT;
     }
-    console.log(winner);
   };
 </script>
 
@@ -198,10 +192,10 @@
 <div class="wrapper">
   <main>
     <PlayerZone
-      player="player1"
-      characters={player1Characters}
-      active={activePlayer === 'player1'}
-      hide={stage === STAGES[3]}
+      player={PLAYER_1}
+      characters={player1Deck}
+      active={activePlayer === PLAYER_1}
+      hide={stage === GAME_OVER}
       {handleCharacterClick} />
     <div class="main-wrapper">
       <p>
@@ -209,32 +203,32 @@
         <br />
         WARS
       </p>
-      {#if stage === STAGES[0]}
+      {#if stage === CHOOSE_STAT}
         <ChooseStat
           {activePlayer}
-          chosenCharacter={activePlayer === 'player1' ? player1Character : player2Character}
+          chosenCharacter={activePlayer === PLAYER_1 ? player1Choice : player2Choice}
           on:choice={handleStatChoice} />
-      {:else if stage === STAGES[1]}
+      {:else if stage === CHOOSE_CHARACTER}
         <ChooseCharacter
-          {player1Character}
-          {player2Character}
+          {player1Choice}
+          {player2Choice}
           handleClick={handleConfirmClick} />
-      {:else if stage === STAGES[2]}
+      {:else if stage === SEE_SCORE}
         <SeeScore
-          {player1Character}
-          {player2Character}
+          {player1Choice}
+          {player2Choice}
           {statChoice}
           on:click={handleScoreClick} />
-      {:else if stage === STAGES[3]}
+      {:else if stage === GAME_OVER}
         <GameOver {winner} />
       {/if}
     </div>
 
     <PlayerZone
-      player="player2"
-      characters={player2Characters}
-      active={activePlayer === 'player2'}
-      hide={stage === STAGES[3]}
+      player={PLAYER_2}
+      characters={player2Deck}
+      active={activePlayer === PLAYER_2}
+      hide={stage === GAME_OVER}
       {handleCharacterClick} />
   </main>
 </div>

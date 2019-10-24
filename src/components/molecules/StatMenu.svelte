@@ -1,5 +1,5 @@
 <script>
-  import Button from "../Button.svelte";
+  import Button from "../atoms/Button.svelte";
 
   export let onMenuClick = () => {
     console.log("Default");

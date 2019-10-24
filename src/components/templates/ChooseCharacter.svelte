@@ -1,9 +1,9 @@
 <script>
   import Arena from "../molecules/Arena.svelte";
-  import Button from "../Button.svelte";
+  import Button from "../atoms/Button.svelte";
 
-  export let player1Character = null;
-  export let player2Character = null;
+  export let player1Choice = null;
+  export let player2Choice = null;
   export let handleClick;
 </script>
 
@@ -15,11 +15,9 @@
 </style>
 
 <div>
-  <Arena {player1Character} {player2Character} />
+  <Arena {player1Choice} {player2Choice} />
   <div class="button-wrapper">
-    <Button
-      onClick={handleClick}
-      disabled={!(player1Character && player2Character)}>
+    <Button onClick={handleClick} disabled={!(player1Choice && player2Choice)}>
       OK
     </Button>
   </div>

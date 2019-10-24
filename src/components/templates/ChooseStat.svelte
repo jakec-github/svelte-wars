@@ -4,6 +4,8 @@
   import Arena from "../molecules/Arena.svelte";
   import StatMenu from "../molecules/StatMenu.svelte";
 
+  import { PLAYER_1 } from "../../const";
+
   const dispatch = createEventDispatcher();
 
   export let activePlayer;
@@ -23,10 +25,10 @@
 </style>
 
 <div>
-  {#if activePlayer === 'player1'}
-    <Arena player1Character={chosenCharacter} />
+  {#if activePlayer === PLAYER_1}
+    <Arena player1Choice={chosenCharacter} />
   {:else}
-    <Arena player2Character={chosenCharacter} />
+    <Arena player2Choice={chosenCharacter} />
   {/if}
   <div class="menu-wrapper">
     <StatMenu {onMenuClick} />
