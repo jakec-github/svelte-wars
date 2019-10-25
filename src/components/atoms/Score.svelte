@@ -39,6 +39,7 @@
     display: block;
     text-align: center;
     color: white;
+    font-family: "body";
   }
 </style>
 
