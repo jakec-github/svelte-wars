@@ -9,10 +9,11 @@
     display: inline-block;
     border: 2px solid black;
     border-radius: 5px;
-    background-color: lightgray;
+    background-color: #444;
     width: 150px;
     min-height: 220px;
     position: relative;
+    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   }
 
   span {

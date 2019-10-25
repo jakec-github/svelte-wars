@@ -15,7 +15,7 @@
 </style>
 
 <div>
-  <Arena {player1Choice} {player2Choice} />
+  <Arena {player1Choice} {player2Choice} showPrompt={true} />
   <div class="button-wrapper">
     <Button onClick={handleClick} disabled={!(player1Choice && player2Choice)}>
       OK
