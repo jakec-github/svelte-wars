@@ -56,16 +56,14 @@
       if (activePlayer === PLAYER_1) {
         const { newCharacterDeck, newLiveCharacter } = updateCharacters(
           player1Choice,
-          player1Deck,
-          i
+          player1Deck
         );
         player1Choice = newLiveCharacter;
         player1Deck = newCharacterDeck;
       } else {
         const { newCharacterDeck, newLiveCharacter } = updateCharacters(
           player2Choice,
-          player2Deck,
-          i
+          player2Deck
         );
         player2Choice = newLiveCharacter;
         player2Deck = newCharacterDeck;

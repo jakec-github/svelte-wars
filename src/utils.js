@@ -18,7 +18,8 @@ export const updateCharacters = (
   characterDeck,
   index = null,
 ) => {
-  const i = index || getRandomPositiveInt(characterDeck.length);
+  const i =
+    index === null ? getRandomPositiveInt(characterDeck.length) - 1 : index;
 
   let newCharacterDeck = [
     ...characterDeck.slice(0, i),
