@@ -1,6 +1,5 @@
 <script>
   import { tweened } from "svelte/motion";
-  import { cubicOut } from "svelte/easing";
 
   const DELAY = 1500;
 
@@ -8,8 +7,7 @@
   export let total;
 
   const finalValue = tweened(0, {
-    duration: (from, to) => to * DELAY,
-    easing: cubicOut
+    duration: (from, to) => to * DELAY
   });
 
   $: {
