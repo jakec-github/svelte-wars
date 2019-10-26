@@ -41,15 +41,8 @@
   let player1Choice;
   let player2Choice;
 
-  $: {
-    if (stage === SEE_SCORE) {
-      activePlayer = null;
-    } else if ((startingPlayer + round) % 2) {
-      activePlayer = stage === CHOOSE_STAT ? PLAYER_2 : PLAYER_1;
-    } else {
-      activePlayer = stage === CHOOSE_STAT ? PLAYER_1 : PLAYER_2;
-    }
-  }
+  // Reactivity 1
+  // code here
 
   // Reactivity 2
   // code here
