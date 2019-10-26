@@ -19,10 +19,14 @@
 
 {#if active}
   <div>
-    <p>Your turn</p>
+    <slot name="active">
+      <p>Your turn</p>
+    </slot>
   </div>
 {:else}
   <div class="inactive">
-    <p>Your turn</p>
+    <slot name="inactive">
+      <p>Their turn</p>
+    </slot>
   </div>
 {/if}

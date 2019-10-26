@@ -29,7 +29,10 @@
 
 <aside class:hidden={hide === true}>
   <div class="your-turn-wrapper">
-    <YourTurn {active} />
+    <YourTurn {active}>
+      <p slot="active">The force is with you</p>
+      <p slot="inactive">Stand by</p>
+    </YourTurn>
   </div>
 
   <CharacterDeck {characters} {handleCharacterClick} {player} />
