@@ -8,8 +8,6 @@
   import { PLAYER_1, PLAYER_2 } from "../../const";
   import { getCraitAge } from "../../utils";
 
-  const dispatch = createEventDispatcher();
-
   export let player1Choice = null;
   export let player2Choice = null;
   export let statChoice;
@@ -38,11 +36,7 @@
 
   let roundWinner = value1 >= value2 ? PLAYER_1 : PLAYER_2;
 
-  const handleClick = () => {
-    dispatch("click", {
-      roundWinner
-    });
-  };
+  const handleClick = () => {};
 </script>
 
 <style>

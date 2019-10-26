@@ -212,11 +212,7 @@
           {player2Choice}
           handleClick={handleConfirmClick} />
       {:else if stage === SEE_SCORE}
-        <SeeScore
-          {player1Choice}
-          {player2Choice}
-          {statChoice}
-          on:click={handleScoreClick} />
+        <SeeScore {player1Choice} {player2Choice} {statChoice} />
       {:else if stage === GAME_OVER}
         <GameOver {winner} />
       {/if}
