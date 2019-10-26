@@ -2,17 +2,26 @@
   import { tweened } from "svelte/motion";
   import { cubicOut } from "svelte/easing";
 
+  const DELAY = 1500;
+
   export let value;
   export let total;
 
-  $: proportion = value / total;
+  const finalValue = tweened(0, {
+    duration: (from, to) => to * DELAY,
+    easing: cubicOut
+  });
 
-  // const finalValue = tweened(0, {
-  //   duration: 400,
-  //   easing: cubicOut
-  // });
+  $: {
+    const proportion = value / total;
+    finalValue.set(proportion);
+  }
 
-  // finalValue.set(proportion);
+  let displayValue = "-";
+
+  setTimeout(() => {
+    displayValue = value;
+  }, DELAY);
 </script>
 
 <style>
@@ -44,6 +53,6 @@
 </style>
 
 <div>
-  <progress value={proportion} />
-  <p>{value}</p>
+  <progress value={$finalValue} />
+  <p>{displayValue}</p>
 </div>
