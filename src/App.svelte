@@ -98,10 +98,7 @@
   });
 
   // Event handlers
-  const handleStatChoice = ({ detail }) => {
-    stage = CHOOSE_CHARACTER;
-    statChoice = detail.choice;
-  };
+  const handleStatChoice = () => {};
 
   const handleCharacterClick = ({
     currentTarget: {

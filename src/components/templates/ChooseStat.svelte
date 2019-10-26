@@ -1,21 +1,13 @@
 <script>
-  import { createEventDispatcher } from "svelte";
-
   import Arena from "../molecules/Arena.svelte";
   import StatMenu from "../molecules/StatMenu.svelte";
 
   import { PLAYER_1 } from "../../const";
 
-  const dispatch = createEventDispatcher();
-
   export let activePlayer;
   export let chosenCharacter;
 
-  const onMenuClick = ({ target }) => {
-    dispatch("choice", {
-      choice: target.id
-    });
-  };
+  const onMenuClick = ({ target }) => {};
 </script>
 
 <style>
