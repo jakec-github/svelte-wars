@@ -16,26 +16,6 @@
   let value2;
   let total;
 
-  switch (statChoice) {
-    case "height":
-      value1 = Number(player1Choice.height) || 0;
-      value2 = Number(player2Choice.height) || 0;
-      total = Math.max(value1, value2, 200);
-      break;
-    case "films":
-      value1 = player1Choice.films.length;
-      value2 = player2Choice.films.length;
-      total = Math.max(value1, value2, 9);
-      break;
-    case "age":
-      value1 = getCraitAge(player1Choice.birthYear);
-      value2 = getCraitAge(player2Choice.birthYear);
-      total = Math.max(value1, value2, 200);
-      break;
-  }
-
-  let roundWinner = value1 >= value2 ? PLAYER_1 : PLAYER_2;
-
   const handleClick = () => {};
 </script>
 
