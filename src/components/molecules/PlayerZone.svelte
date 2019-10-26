@@ -1,6 +1,4 @@
 <script>
-  import YourTurn from "../atoms/YourTurn.svelte";
-
   import CharacterDeck from "./CharacterDeck.svelte";
 
   export let player;
@@ -28,12 +26,7 @@
 </style>
 
 <aside class:hidden={hide === true}>
-  <div class="your-turn-wrapper">
-    <YourTurn {active}>
-      <p slot="active">The force is with you</p>
-      <p slot="inactive">Stand by</p>
-    </YourTurn>
-  </div>
+  <div class="your-turn-wrapper" />
 
   <CharacterDeck {characters} {handleCharacterClick} {player} />
 
