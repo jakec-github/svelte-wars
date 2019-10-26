@@ -51,25 +51,8 @@
     }
   }
 
-  $: if (player1Deck && player2Deck) {
-    if (stage === CHOOSE_STAT) {
-      if (activePlayer === PLAYER_1) {
-        const { newCharacterDeck, newLiveCharacter } = updateCharacters(
-          player1Choice,
-          player1Deck
-        );
-        player1Choice = newLiveCharacter;
-        player1Deck = newCharacterDeck;
-      } else {
-        const { newCharacterDeck, newLiveCharacter } = updateCharacters(
-          player2Choice,
-          player2Deck
-        );
-        player2Choice = newLiveCharacter;
-        player2Deck = newCharacterDeck;
-      }
-    }
-  }
+  // Reactivity 2
+  // code here
 
   // Lifecycle
   onMount(async () => {
