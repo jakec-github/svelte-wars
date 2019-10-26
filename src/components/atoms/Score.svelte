@@ -1,25 +1,8 @@
 <script>
-  import { tweened } from "svelte/motion";
-
-  const DELAY = 1500;
-
   export let value;
   export let total;
 
-  const finalValue = tweened(0, {
-    duration: (from, to) => to * DELAY
-  });
-
-  $: {
-    const proportion = value / total;
-    finalValue.set(proportion);
-  }
-
-  let displayValue = "-";
-
-  setTimeout(() => {
-    displayValue = value;
-  }, DELAY);
+  $: proportion = value / total;
 </script>
 
 <style>
@@ -51,6 +34,6 @@
 </style>
 
 <div>
-  <progress value={$finalValue} />
-  <p>{displayValue}</p>
+  <progress value={proportion} />
+  <p>{value}</p>
 </div>
