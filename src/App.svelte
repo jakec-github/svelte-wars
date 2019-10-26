@@ -193,8 +193,7 @@
       player={PLAYER_1}
       characters={player1Deck}
       active={activePlayer === PLAYER_1}
-      hide={stage === GAME_OVER}
-      {handleCharacterClick} />
+      hide={stage === GAME_OVER} />
     <div class="main-wrapper">
       <p>
         SVELTE
@@ -222,7 +221,6 @@
       player={PLAYER_2}
       characters={player2Deck}
       active={activePlayer === PLAYER_2}
-      hide={stage === GAME_OVER}
-      {handleCharacterClick} />
+      hide={stage === GAME_OVER} />
   </main>
 </div>
