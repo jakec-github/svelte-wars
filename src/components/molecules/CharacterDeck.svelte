@@ -1,7 +1,7 @@
 <script>
   import Character from "../atoms/Character.svelte";
 
-  export let characters = [];
+  export let characters = ["", ""];
   export let handleCharacterClick;
   export let player;
 </script>

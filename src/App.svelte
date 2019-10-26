@@ -48,30 +48,7 @@
   // code here
 
   // Lifecycle
-  onMount(async () => {
-    let characterIds = [];
-
-    for (let i = 0; i < DECK_SIZE * 2; i += 1) {
-      while (true) {
-        const id = getRandomPositiveInt(TOTAL_CHARACTERS);
-        if (!characterIds.includes(id) && id !== 17) {
-          characterIds[i] = id;
-          break;
-        }
-      }
-    }
-
-    const characters = await Promise.all(
-      characterIds.map(id => {
-        return fetch(`https://swapi.co/api/people/${id}/`).then(result =>
-          getCharacterData(result, id)
-        );
-      })
-    );
-
-    player1Deck = characters.slice(0, DECK_SIZE);
-    player2Deck = characters.slice(DECK_SIZE);
-  });
+  // code here
 
   // Event handlers
   const handleStatChoice = () => {};
